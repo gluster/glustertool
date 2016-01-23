@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+import os
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
+import sys
+import json
+
+
+SUBCMD_DIR = "glustertool/plugins"
+
+TMPL_SINGLE_FILE_PY = """#!/usr/bin/env python
+\"""
+Write your tool documentation here
+\"""
+
+
+def cmdargs(parser):
+    # Add arguments for your tool using parser object
+    # For example, parser.add_argument("--name", help="Name")
+    pass
+
+
+def run(args):
+    # Implement your tool logic here
+    print "Hello World!"
+"""
+
+tool_json = {
+    "bin": "",
+    "prog": ""
+}
+
+
+def main():
+    parser = ArgumentParser(formatter_class=RawDescriptionHelpFormatter,
+                            description=__doc__)
+    parser.add_argument("cmd", help="Command Name")
+    parser.add_argument("--type", help="Command Type", default="pyscript",
+                        choices=["pyscript", "pymodule", "exec"])
+    parser.add_argument("--bin", default="",
+                        help="Bin path in case of type=exec")
+    parser.add_argument("--prog", default="",
+                        help="Exec program path in case of "
+                        "type=exec. Example python, perl etc. Leave "
+                        "blank in case of binary")
+    args = parser.parse_args()
+
+    path = os.path.join(SUBCMD_DIR, args.cmd)
+
+    if os.path.exists(path) or os.path.exists(path + ".py"):
+        print "Tool already exists"
+        sys.exit(1)
+
+    if args.type == "pyscript":
+        with open(path + ".py", "w") as f:
+            f.write(TMPL_SINGLE_FILE_PY)
+    elif args.type == "pymodule":
+        os.mkdir(path)
+        with open(os.path.join(path, "__init__.py"), "w") as f:
+            f.write(TMPL_SINGLE_FILE_PY)
+    elif args.type == "exec":
+        os.mkdir(path)
+        with open(os.path.join(path, "doc.txt"), "w") as f:
+            f.write("")
+        tool_json["bin"] = args.bin
+        tool_json["prog"] = args.prog
+        with open(os.path.join(path, "tool.json"), "w") as f:
+            f.write(json.dumps(tool_json, indent=4))
+
+
+if __name__ == "__main__":
+    main()
