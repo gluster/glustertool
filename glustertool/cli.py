@@ -19,18 +19,13 @@ import os
 import sys
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 import json
-import subprocess
+
+from glustertool.utils import execute
 
 
 SUBCMD_DIR = "plugins"
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
 SUBCMD_DIR = os.path.join(CUR_DIR, SUBCMD_DIR)
-
-
-def execute(cmd):
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = p.communicate()
-    return (p.returncode, out, err)
 
 
 def load_plugin(plugin):
