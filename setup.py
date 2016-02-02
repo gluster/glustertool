@@ -5,7 +5,7 @@ from setuptools import setup
 setup(
     name="glustertool",
     version="0.1.1",
-    packages=["glustertool"],
+    packages=["glustertool", "glustertool.utils", "glustertool.plugins"],
     include_package_data=True,
     install_requires=['argparse', 'pyxattr'],
     entry_points={
