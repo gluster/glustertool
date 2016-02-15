@@ -90,8 +90,10 @@ def main():
 
     try:
         submodule = load_plugin(subcommand)
-        p = subparsers.add_parser(subcommand)
+        p = subparsers.add_parser(subcommand, add_help=False)
         submodule.cmdargs(p)
+        p.add_argument("--help", action="help",
+                       help="show this help message and exit")
         args = parser.parse_args()
         submodule.run(args)
     except ImportError:
