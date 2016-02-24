@@ -1,0 +1,6 @@
+- [X] RPM Spec file
+- [X] dirgfid2path tool
+- [ ] Migrate tool df from https://github.com/aravindavk/glusterfs-tools
+- [ ] Fedora packaging
+- [ ] Ubuntu packaging
+- [ ] Python 3 compat
