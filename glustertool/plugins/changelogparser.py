@@ -67,6 +67,7 @@ class NumTokens_V11(object):
     CREATE = 7
     SETATTR = 3
     FTRUNCATE = 3
+    FXATTROP = 3
 
 
 class NumTokens_V12(NumTokens_V11):
