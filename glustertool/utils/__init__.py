@@ -8,7 +8,7 @@ class GlusterCmdExecuteFailed(Exception):
 def execute(cmd):
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-    return (p.returncode, out.strip(), err.strip())
+    return (p.returncode, out, err)
 
 
 def execute_gluster_cmd(cmd):

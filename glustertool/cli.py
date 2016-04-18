@@ -112,8 +112,18 @@ def main():
                 sys.stderr.write(err)
                 sys.exit(rc)
         else:
-            sys.stderr.write("Invalid Command\n")
-            sys.exit(1)
+            # If any executable named, glustertool-<SUBCMD>
+            try:
+                cmd = ["glustertool-{0}".format(subcommand)] + sys.argv[2:]
+                rc, out, err = execute(cmd)
+                if rc == 0:
+                    sys.stdout.write(out)
+                else:
+                    sys.stderr.write(err)
+                    sys.exit(rc)
+            except OSError:
+                sys.stderr.write("Invalid Command\n")
+                sys.exit(1)
 
 
 if __name__ == "__main__":
