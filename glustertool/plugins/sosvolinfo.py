@@ -72,12 +72,17 @@ def cmdargs(parser):
     # Add arguments for your tool using parser object
     # For example, parser.add_argument("--name", help="Name")
     parser.add_argument("path", help="Sosreport path")
+    parser.add_argument("--name", help="Volume Name")
 
 
 def run(args):
     volsdir = os.path.join(args.path, "var/lib/glusterd/vols")
 
     for v in os.listdir(volsdir):
+        # If volume name is specified
+        if args.name is not None and args.name != v:
+            continue
+
         info_file = os.path.join(volsdir, v, "info")
         volinfo = None
         with open(info_file) as f:

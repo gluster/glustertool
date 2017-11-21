@@ -39,7 +39,10 @@ def parse_tool_json(path):
 
 def handle_list():
     print ("List of available tools, `glustertool doc <TOOLNAME>` "
-           "or `glustertool <TOOLNAME> -h` for more details about the tool.")
+           "or `glustertool <TOOLNAME> --help` for more details "
+           "about the tool.\n")
+    i = 0
+
     for d in sorted(os.listdir(SUBCMD_DIR)):
         if d.startswith("__init__"):
             continue
@@ -50,7 +53,8 @@ def handle_list():
         if d.endswith(".py"):
             d = d.replace(".py", "")
 
-        print (d)
+        i += 1
+        print("%5d %s" % (i, d))
 
 
 def handle_doc(subcommand=None):
